@@ -44,3 +44,22 @@ sexo(fabiana, feminino).
 sexo(francisca, feminino).
 sexo(antonia, feminino).
 sexo(claudia, feminino).
+
+avo(X, Y) :- progenitor(X, Z), progenitor(Z, Y), sexo(X, masculino).
+avoa(X, Y) :- progenitor(X, Z), progenitor(Z, Y), sexo(X, feminino).
+
+irmao(X, Y) :- progenitor(Z, X), progenitor(Z, Y), X \= Y, sexo(X, masculino).
+irma(X, Y) :- progenitor(Z, X), progenitor(Z, Y), X \= Y, sexo(X, feminino).
+
+tio(X, Y) :- irmao(X, Z), progenitor(Z, Y).
+tia(X, Y) :- irma(X, Z), progenitor(Z, Y).
+
+primo(X, Y) :- progenitor(Z, X), irmao(Z, W), progenitor(W, Y), sexo(X, masculino).
+primo(X, Y) :- progenitor(Z, X), irma(Z, W), progenitor(W, Y), sexo(X, masculino).
+prima(X, Y) :- progenitor(Z, X), irmao(Z, W), progenitor(W, Y), sexo(X, feminino).
+prima(X, Y) :- progenitor(Z, X), irma(Z, W), progenitor(W, Y), sexo(X, feminino).
+
+descendente(X, Y) :- progenitor(Y, X).
+descendente(X, Y) :- progenitor(Y, Z), descendente(X, Z).
+
+ascendente(X, Y) :- descendente(Y, X).
